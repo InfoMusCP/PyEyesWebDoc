@@ -32,7 +32,7 @@ jobs:
 
     - name: Build site 🏗️
       run: |
-        cp -r PyEyesWeb/PyEyesWeb/ ./
+        cp -r PyEyesWeb/ ./
         mkdocs build
 
     - name: Deploy to GitHub Pages 🚀
