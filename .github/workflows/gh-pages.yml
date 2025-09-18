@@ -32,8 +32,8 @@ jobs:
 
     - name: Build site 🏗️
       run: |
-        cp -r PyEyesWeb/ ./
         mkdocs build
+      # This will be necessary when building API reference, but check with ls command because it crashes cp -r PyEyesWeb/ ./
 
     - name: Deploy to GitHub Pages 🚀
       uses: peaceiris/actions-gh-pages@v3
