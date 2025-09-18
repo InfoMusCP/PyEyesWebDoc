@@ -1,6 +1,6 @@
 site_name: PyEyesWeb
-repo_url: https://github.com/InfoMusCP/PyEyesWeb
-site_url: https://infomuscp.github.io/PyEyesWeb
+repo_url: https://github.com/InfoMusCP/pyeyesweb_doc
+site_url: https://infomuscp.github.io/pyeyesweb_doc
 
 theme:
   name: material
