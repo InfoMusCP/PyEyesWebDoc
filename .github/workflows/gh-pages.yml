@@ -1,44 +1,35 @@
-name: Deploy MkDocs to GitHub Pages
+name: Deploy MkDocs to PyEyesWeb GitHub Pages
 
 on:
   push:
     branches:
-      - main  # or master, depending on your repo
-
-permissions:
-  contents: write
-
+      - main   # adjust if your docs repo uses a different branch
 
 jobs:
-  build:
+  build-deploy:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout 🛎️
-      uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install mkdocs mkdocs-material
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
 
-    - name: Clone repository
-      uses: actions/checkout@v3
-      with:
-        repository: InfoMusCP/PyEyesWeb
-        ref: main
-        # Relative path under $GITHUB_WORKSPACE to place the repository
-        path: PyEyesWeb
+      - name: Install MkDocs and Material theme
+        run: |
+          pip install mkdocs mkdocs-material
 
-    - name: Build site 🏗️
-      run: |
-        mkdocs build
-      # This will be necessary when building API reference, but check with ls command because it crashes cp -r PyEyesWeb/ ./
+      - name: Build MkDocs site
+        run: mkdocs build --strict
 
-    - name: Deploy to GitHub Pages 🚀
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./docs
-        publish_branch: gh-pages
-        force_orphan: true
+      - name: Deploy to PyEyesWeb/gh-pages 🚀
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          external_repository: InfoMusCP/PyEyesWeb
+          publish_dir: ./site
+          publish_branch: gh-pages
+          personal_token: ${{ secrets.DEPLOY_TOKEN }}
+          force_orphan: true
+          enable_jekyll: false
