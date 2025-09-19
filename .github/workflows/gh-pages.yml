@@ -53,8 +53,6 @@ jobs:
           PYTHONPATH: ${{ github.workspace }}/PyEyesWeb
         run: |
           echo "Building with PYTHONPATH: $PYTHONPATH"
-          # Verify the import works
-          python -c "import sys; sys.path.insert(0, 'PyEyesWeb'); import core; print('✓ Core module can be imported')"
           # Build the docs
           mkdocs build --strict --verbose
 
