@@ -43,8 +43,9 @@ jobs:
           echo "=== Python Environment ==="
           python -c "import sys; print('Python path:', sys.path)"
           echo "Current PYTHONPATH: $PYTHONPATH"
-          echo "=== Test Import ==="
-          cd PyEyesWeb && python -c "import core; print('Core module imported successfully')" || echo "Failed to import core module"
+
+      #echo "=== Test Import ==="
+      #cd PyEyesWeb && python -c "import core; print('Core module imported successfully')" || echo "Failed to import core module"
 
       # 6. Build docs with proper PYTHONPATH
       - name: Build MkDocs site
