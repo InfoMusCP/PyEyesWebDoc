@@ -7,7 +7,7 @@ plugins:
   - mkdocstrings:
       handlers:
         python:
-          paths: [.]            # root, since "core" is directly there
+          paths: [PyEyesWeb]            # root, since "core" is directly there
           options:
             docstring_style: numpy
   - literate-nav
