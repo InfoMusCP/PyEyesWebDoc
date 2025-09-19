@@ -1,6 +1,17 @@
 site_name: PyEyesWeb
-repo_url: https://github.com/InfoMusCP/pyeyesweb_doc
-site_url: https://infomuscp.github.io/pyeyesweb_doc
+
+plugins:
+  - gen-files:
+      scripts:
+        - gen_pages.py
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [.]            # root, since "core" is directly there
+          options:
+            docstring_style: numpy
+  - literate-nav
+  - section-index
 
 theme:
   name: material
@@ -17,8 +28,8 @@ theme:
       toggle:
         icon: material/weather-sunny
         name: Switch to light mode
+
 nav:
   - Home: index.md
-  - API: api.md
+  - API: API/index.md
   - Examples: examples.md
-
