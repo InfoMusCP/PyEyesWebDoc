@@ -31,6 +31,7 @@ for path in sorted(SRC_DIR.rglob("*.py")):
     nav[module_path.parts] = doc_path.relative_to(API_DOCS_PATH).as_posix()
 
     # Generate module page
+    doc_path.parent.mkdir(parents=True, exist_ok=True)
     with mkdocs_gen_files.open(doc_path, "w") as f:
         print(f"::: {PACKAGE_NAME}.{module_name}", file=f)
 
