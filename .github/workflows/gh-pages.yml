@@ -11,11 +11,11 @@ jobs:
     steps:
       # 1. Checkout the docs repository (this one)
       - name: Checkout docs repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # 2. Checkout the source code repository into a subfolder
       - name: Checkout PyEyesWeb source code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: InfoMusCP/PyEyesWeb
           path: PyEyesWeb   # now code is available in ./PyEyesWeb/core
@@ -26,30 +26,42 @@ jobs:
         with:
           python-version: '3.x'
 
-      # 4. Install requirements from your docs repo
+      # 4. Install dependencies from your docs repo
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
 
-      # DEBUG
+      # 5. Debug - Check Python path and structure
       - name: Debug - Check Python path and structure
         run: |
+          echo "=== Directory Structure ==="
           ls -la PyEyesWeb/
+          echo "=== Core Package ==="
           ls -la PyEyesWeb/core/
+          echo "=== Data Models ==="
+          ls -la PyEyesWeb/core/data_models/ || echo "data_models directory not found"
+          echo "=== Python Environment ==="
           python -c "import sys; print('Python path:', sys.path)"
-          echo "PYTHONPATH: $PYTHONPATH"
+          echo "Current PYTHONPATH: $PYTHONPATH"
+          echo "=== Test Import ==="
+          cd PyEyesWeb && python -c "import core; print('Core module imported successfully')" || echo "Failed to import core module"
 
-      # 5. Build docs (tell mkdocstrings where to find `core`)
+      # 6. Build docs with proper PYTHONPATH
       - name: Build MkDocs site
         env:
-          PYTHONPATH: ./PyEyesWeb   # so mkdocstrings can import core
-        run: mkdocs build --strict
+          PYTHONPATH: ${{ github.workspace }}/PyEyesWeb
+        run: |
+          echo "Building with PYTHONPATH: $PYTHONPATH"
+          # Verify the import works
+          python -c "import sys; sys.path.insert(0, 'PyEyesWeb'); import core; print('✓ Core module can be imported')"
+          # Build the docs
+          mkdocs build --strict --verbose
 
-      # 6. Deploy the built site to GitHub Pages
+      # 7. Deploy the built site to GitHub Pages
       - name: Deploy to GitHub Pages 🚀
         uses: peaceiris/actions-gh-pages@v3
         with:
-          external_repository: InfoMusCP/PyEyesWeb   # deploy docs repo, not code repo
+          external_repository: InfoMusCP/PyEyesWeb
           publish_dir: ./site
           publish_branch: gh-pages
           personal_token: ${{ secrets.DEPLOY_TOKEN }}

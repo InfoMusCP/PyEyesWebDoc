@@ -10,7 +10,8 @@ plugins:
           paths: [PyEyesWeb]            # root, since "core" is directly there
           options:
             docstring_style: numpy
-  - literate-nav
+  - literate-nav:
+      nav_file: SUMMARY.md
   - section-index
 
 theme:
