@@ -41,7 +41,7 @@ jobs:
       - name: Deploy to GitHub Pages 🚀
         uses: peaceiris/actions-gh-pages@v3
         with:
-          external_repository: InfoMusCP/pyeyesweb_doc   # deploy docs repo, not code repo
+          external_repository: InfoMusCP/PyEyesWeb   # deploy docs repo, not code repo
           publish_dir: ./site
           publish_branch: gh-pages
           personal_token: ${{ secrets.DEPLOY_TOKEN }}
