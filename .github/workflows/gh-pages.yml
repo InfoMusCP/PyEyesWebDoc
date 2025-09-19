@@ -3,31 +3,45 @@ name: Deploy MkDocs to PyEyesWeb GitHub Pages
 on:
   push:
     branches:
-      - main   # adjust if your docs repo uses a different branch
+      - main   # branch of your docs repo (pyeyesweb_doc)
 
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      # 1. Checkout the docs repository (this one)
+      - name: Checkout docs repository
         uses: actions/checkout@v3
 
+      # 2. Checkout the source code repository into a subfolder
+      - name: Checkout PyEyesWeb source code
+        uses: actions/checkout@v3
+        with:
+          repository: InfoMusCP/PyEyesWeb
+          path: PyEyesWeb   # now code is available in ./PyEyesWeb/core
+
+      # 3. Set up Python
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.x'
 
-      - name: Install MkDocs and Material theme
+      # 4. Install requirements from your docs repo
+      - name: Install dependencies
         run: |
-          pip install mkdocs mkdocs-material
+          pip install -r requirements.txt
 
+      # 5. Build docs (tell mkdocstrings where to find `core`)
       - name: Build MkDocs site
+        env:
+          PYTHONPATH: ./PyEyesWeb   # so mkdocstrings can import core
         run: mkdocs build --strict
 
-      - name: Deploy to PyEyesWeb/gh-pages 🚀
+      # 6. Deploy the built site to GitHub Pages
+      - name: Deploy to GitHub Pages 🚀
         uses: peaceiris/actions-gh-pages@v3
         with:
-          external_repository: InfoMusCP/PyEyesWeb
+          external_repository: InfoMusCP/pyeyesweb_doc   # deploy docs repo, not code repo
           publish_dir: ./site
           publish_branch: gh-pages
           personal_token: ${{ secrets.DEPLOY_TOKEN }}
