@@ -31,6 +31,14 @@ jobs:
         run: |
           pip install -r requirements.txt
 
+      # DEBUG
+      - name: Debug - Check Python path and structure
+        run: |
+          ls -la PyEyesWeb/
+          ls -la PyEyesWeb/core/
+          python -c "import sys; print('Python path:', sys.path)"
+          echo "PYTHONPATH: $PYTHONPATH"
+
       # 5. Build docs (tell mkdocstrings where to find `core`)
       - name: Build MkDocs site
         env:
