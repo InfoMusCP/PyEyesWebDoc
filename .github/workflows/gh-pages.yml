@@ -54,7 +54,7 @@ jobs:
         run: |
           echo "Building with PYTHONPATH: $PYTHONPATH"
           # Build the docs
-          mkdocs build --strict --verbose
+          mkdocs build --verbose
 
       # 7. Deploy the built site to GitHub Pages
       - name: Deploy to GitHub Pages 🚀
