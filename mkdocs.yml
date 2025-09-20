@@ -7,7 +7,7 @@ plugins:
   - mkdocstrings:
       handlers:
         python:
-          paths: [PyEyesWeb]            # root, since "core" is directly there
+          paths: [PyEyesWeb]
           options:
             docstring_style: numpy
   - literate-nav:
@@ -16,6 +16,7 @@ plugins:
 
 markdown_extensions:
   - admonition
+  - footnotes
   - attr_list
   - md_in_html
   - pymdownx.details
@@ -23,13 +24,17 @@ markdown_extensions:
   - pymdownx.tabbed
   - pymdownx.snippets
   - pymdownx.keys
-#  - toc:
-#      permalink: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
 
 theme:
   name: material
+  logo: assets/eyesweb-logo.png
+  favicon: assets/favicon-32x32.png
   features:
     - navigation.tabs
+    - navigation.tabs.sticky
     - navigation.instant
 #    - navigation.expand
     - content.code.copy
@@ -52,5 +57,5 @@ theme:
 nav:
   - Home: index.md
   - Getting Started: getting_started.md
-  - Examples: examples.md
   - API: API/
+  - Integrations: integrations.md
