@@ -14,8 +14,27 @@ plugins:
       nav_file: SUMMARY.md
   - section-index
 
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tabbed
+  - pymdownx.snippets
+  - pymdownx.keys
+#  - toc:
+#      permalink: true
+
 theme:
   name: material
+  features:
+    - navigation.tabs
+    - navigation.instant
+#    - navigation.expand
+    - content.code.copy
+    - content.tabs.link
+    - content.tooltips
   palette:
     - scheme: default
       primary: indigo
@@ -32,5 +51,6 @@ theme:
 
 nav:
   - Home: index.md
-  - API: API/
+  - Getting Started: getting_started.md
   - Examples: examples.md
+  - API: API/
